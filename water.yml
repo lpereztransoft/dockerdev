@@ -1,0 +1,68 @@
+# config data bases
+# config bus
+spring:
+  rabbitmq:
+    host: {DOCKER_IP} #config ip rabbitmq and for docker change the host for the ip of your machine
+    port: 5672
+    username: admin
+    password: admin
+  #profiles: test
+  #jmx:
+    #enabled: false
+# Datasource and JPA configuration to be used for using the same tokenstore as the authorization server for
+# the defined resource server. Note that there can't be 2 different root nodes, so datasource falls under the "spring" node.
+  datasource:
+    url: jdbc:mysql://{DOCKER_IP}:3306/water?useSSL=false
+    username: root
+    password: mysql
+    driver-class: com.mysql.jdbc.Driver
+    initialize: true
+    separator: ^
+    continueOnError: false
+    schema: classpath:/db-scripts/0.0.1/schema.sql
+    data: classpath:/db-scripts/0.0.1/data.sql
+#
+  jpa:
+    database: MYSQL
+    database-platform: org.hibernate.dialect.MySQLDialect
+    show-sql: true
+    hibernate:
+      #ddl-auto: create
+      show_sql: true
+      naming-strategy: org.hibernate.cfg.ImprovedNamingStrategy
+# Logging settings.
+logging:
+
+  # The default level of all loggers. Can be OFF, ERROR, WARN, INFO, DEBUG, TRACE, or ALL.
+  level: 
+    com.scloud.wt.water: DEBUG
+
+  # Logger-specific levels.
+  loggers:
+
+    # Redirects SQL logs to a separate file
+    org.hibernate.SQL: DEBUG
+    org.springframework.web: DEBUG
+server:
+  port: 8081
+# config Oauth
+serviceOauth:
+  login: http://oauth-service/uaa/oauth/token?client_id=
+  refresh: http://oauth-service/uaa/oauth/token?grant_type=refresh_token&refresh_token=
+  logout: http://oauth-service/uaa/api/logout-up
+  account: http://localhost:9999/uaa/api/account
+# config registry eureka
+eureka:
+  client:
+    serviceUrl:
+      #defaultZone:  http://actuator:password@localhost:8761/eureka/
+      defaultZone:  http://{DOCKER_IP}:8761/eureka/
+  instance:
+    metadataMap:
+      instanceId: ${spring.application.name}:${server.port}
+security:
+  oauth2:
+    client:
+      accessTokenUri: http://{DOCKER_IP}:9999/uaa/oauth/token
+    resource:
+      userInfoUri: http://{DOCKER_IP}:9999/uaa/api/user
