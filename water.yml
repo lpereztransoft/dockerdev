@@ -50,7 +50,7 @@ serviceOauth:
   login: http://oauth-service/uaa/oauth/token?client_id=
   refresh: http://oauth-service/uaa/oauth/token?grant_type=refresh_token&refresh_token=
   logout: http://oauth-service/uaa/api/logout-up
-  account: http://localhost:9999/uaa/api/account
+  account: http://{DOCKER_IP}:9999/uaa/api/account
 # config registry eureka
 eureka:
   client:
