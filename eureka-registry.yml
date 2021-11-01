@@ -3,7 +3,7 @@ server:
 # config bus
 spring:
   rabbitmq:
-    host: {DOCKER_IP} #config ip rabbitmq and for docker change the host for the ip of your machine
+    host: {HOST_IP} #config ip rabbitmq and for docker change the host for the ip of your machine
     port: 5672
     username: admin
     password: admin
@@ -11,7 +11,7 @@ spring:
 # for server discovery
 eureka:
   instance:
-    hostname: {DOCKER_IP}
+    hostname: {HOST_IP}
   client:
     registerWithEureka: false
     fetchRegistry: false
