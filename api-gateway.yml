@@ -40,7 +40,7 @@ serviceOauth:
   refresh: http://oauth-service/uaa/oauth/token?grant_type=refresh_token&refresh_token=
   logout: http://oauth-service/uaa/api/logout-up
   account: http://oauth-service/uaa/api/account
-  errorOauth: http://{DOCKER_IP}:${server.port}
+  errorOauth: http://{HOST_IP}:${server.port}
 #spring:
   #application:
     #name: api-gateway
@@ -108,7 +108,7 @@ eureka:
   client:
     serviceUrl:
       #defaultZone: http://actuator:password@localhost:8761/eureka/
-      defaultZone: http://{DOCKER_IP}:8761/eureka/
+      defaultZone: http://{HOST_IP}:8761/eureka/
   instance:
     metadataMap:
       instanceId: ${spring.application.name}:${server.port}
@@ -123,5 +123,5 @@ security:
     enabled: false
   oauth2:
     resource:
-      userInfoUri: http://{DOCKER_IP}:9999/uaa/api/user
+      userInfoUri: http://{HOST_IP}:9999/uaa/api/user
       #preferTokenInfo: false
